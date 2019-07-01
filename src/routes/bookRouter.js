@@ -45,6 +45,17 @@ function routes(Book) {
 			book.read = req.body.read;
 			book.save();
 			return res.json(book);
+		})
+		.patch((req, res) => {
+			const { book } = req;
+			if (req.body._id) {
+				delete req.body._id;
+			}
+			for (let key in req.body) {
+				book[key] = req.body[key];
+			}
+			book.save();
+			return res.json(book);
 		});
 
 	return bookRouter;
