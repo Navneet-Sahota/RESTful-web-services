@@ -11,6 +11,7 @@ function routes(Book) {
 				if (err) {
 					return res.send(err);
 				}
+				// 201 means created
 				return res.status(201).json(book);
 			});
 		})
@@ -36,6 +37,7 @@ function routes(Book) {
 				req.book = book;
 				return next();
 			}
+			// 404 means not found
 			return res.sendStatus(404);
 		});
 	});
@@ -68,6 +70,15 @@ function routes(Book) {
 					return res.send(err);
 				}
 				return res.json(book);
+			});
+		})
+		.delete((req, res) => {
+			req.book.remove(err => {
+				if (err) {
+					return res.send(err);
+				}
+				// 204 means removed
+				return res.sendStatus(204);
 			});
 		});
 
