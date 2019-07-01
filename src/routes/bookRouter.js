@@ -7,7 +7,12 @@ function routes(Book) {
 		.post((req, res) => {
 			const book = new Book(req.body);
 			book.save();
-			res.status(201).json(book);
+			book.save(err => {
+				if (err) {
+					return res.send(err);
+				}
+				return res.status(201).json(book);
+			});
 		})
 		.get((req, res) => {
 			const query = {};
@@ -43,8 +48,12 @@ function routes(Book) {
 			book.author = req.body.author;
 			book.genre = req.body.genre;
 			book.read = req.body.read;
-			book.save();
-			return res.json(book);
+			book.save(err => {
+				if (err) {
+					return res.send(err);
+				}
+				return res.json(book);
+			});
 		})
 		.patch((req, res) => {
 			const { book } = req;
@@ -54,8 +63,12 @@ function routes(Book) {
 			for (let key in req.body) {
 				book[key] = req.body[key];
 			}
-			book.save();
-			return res.json(book);
+			book.save(err => {
+				if (err) {
+					return res.send(err);
+				}
+				return res.json(book);
+			});
 		});
 
 	return bookRouter;
