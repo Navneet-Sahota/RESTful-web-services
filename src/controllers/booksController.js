@@ -1,6 +1,10 @@
 function booksController(Book) {
 	const post = (req, res) => {
 		const book = new Book(req.body);
+		if (!req.body.title) {
+			res.status(400);
+			return res.send("Title is required");
+		}
 		book.save();
 		// 201 means created
 		res.status(201);
